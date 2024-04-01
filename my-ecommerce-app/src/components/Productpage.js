@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Header from './Header';
-import ProductList from './ProductList';
+import ProductList from 'my-ecommerce-app\Backend\app.py';
 import Cart from './Cart';
 import Footer from './Footer';
 import productsData from '../data/products';
