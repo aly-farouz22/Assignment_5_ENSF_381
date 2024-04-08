@@ -5,11 +5,11 @@ const ProductList = ({ onAddToCart }) => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    fetch('/api/products') // Adjust the URL based on your actual backend URL
+    fetch('http://localhost:3000/products') 
       .then(response => response.json())
       .then(data => setProducts(data))
       .catch(error => console.error('Error fetching products:', error));
-  }, []); // Empty dependency array means this runs once on component mount
+  }, []); 
 
   return (
     <div className="product-list">

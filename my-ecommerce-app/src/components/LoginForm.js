@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
+import { useNavigate } from 'react-router-dom'; 
 
 const LoginForm = ({ switchToSignup }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const navigate = useNavigate(); // Get navigate function
+    const navigate = useNavigate(); 
 
     const handleLogin = () => {
         if (username.trim() !== '' && password.trim() !== '') {
             console.log('Logged in with:', { username, password });
-            // Navigate to products page upon successful login
             navigate('/products');
         } else {
             alert('Please fill in all fields');

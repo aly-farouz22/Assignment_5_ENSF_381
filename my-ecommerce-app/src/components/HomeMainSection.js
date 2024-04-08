@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const HomeMainSection = ({ reviews }) => {
-  // Function to generate star icons based on rating
   const renderStars = (rating) => {
     const stars = [];
     for (let i = 0; i < rating; i++) {

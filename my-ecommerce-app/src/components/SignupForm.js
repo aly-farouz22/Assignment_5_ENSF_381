@@ -14,7 +14,7 @@ const SignupForm = ({ switchToLogin }) => {
       setErrorMessage('Passwords do not match.');
     } else {
       console.log('Signed up with:', { username, password, email });
-      setErrorMessage(''); // Clear error message after successful signup
+      setErrorMessage(''); 
       setUsername('');
       setPassword('');
       setConfirmPassword('');

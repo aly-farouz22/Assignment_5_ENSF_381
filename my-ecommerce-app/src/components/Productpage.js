@@ -7,10 +7,9 @@ import { Link } from 'react-router-dom';
 
 const Productpage = () => {
   const [cartItems, setCartItems] = useState([]);
-  const [products, setProducts] = useState([]); // Add a state for storing fetched products
+  const [products, setProducts] = useState([]); 
 
   useEffect(() => {
-    // Fetch cart items from localStorage
     const storedCartItems = localStorage.getItem('cartItems');
     if (storedCartItems) {
       setCartItems(JSON.parse(storedCartItems));
@@ -18,17 +17,15 @@ const Productpage = () => {
   }, []);
 
   useEffect(() => {
-    // Store cart items to localStorage whenever they change
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
   }, [cartItems]);
 
   useEffect(() => {
-    // Fetch products from the Flask backend API
-    fetch('http://localhost:5000/api/products') // Adjust the URL to match your actual backend API
+    fetch('http://localhost:3000/products') 
       .then(response => response.json())
       .then(data => setProducts(data))
       .catch(error => console.error('Failed to fetch products:', error));
-  }, []); // This effect runs once on component mount to fetch products
+  }, []); 
 
   const addToCart = (product) => {
     const existingItem = cartItems.find(item => item.id === product.id);

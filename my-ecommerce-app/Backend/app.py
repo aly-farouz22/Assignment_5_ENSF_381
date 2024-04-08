@@ -74,18 +74,16 @@ products = [
  "image": 'images/product10.jpg'
  }
 ]
-CORS(app)  # Enable CORS for all domains
+CORS(app)  
 
-users = []  # Initialize an empty list to store user data
+users = []  
 
 
 @app.route('/api/register', methods=['POST'])
 def register():
     data = request.json
-    # Check if the username already exists
     if any(user['username'] == data['username'] for user in users):
         return jsonify({'error': 'Username already exists'}), 400
-    # Add the new user to the users list
     users.append({
         'username': data['username'],
         'password': data['password'],
@@ -97,17 +95,13 @@ def register():
 @app.route('/api/login', methods=['POST'])
 def login():
     data = request.json
-    # Check if the username and password match any user in the users list
     user = next((user for user in users if user['username'] == data['username'] and user['password'] == data['password']), None)
     if user is not None:
-        # Authentication successful
         return jsonify({'message': 'Login successful'}), 200
     else:
-        # Authentication failed
         return jsonify({'error': 'Invalid username or password'}), 401
 
 
-# Product API Endpoint
 @app.route('/api/products', methods=['GET'])
 def product_page():
     return jsonify(products)
