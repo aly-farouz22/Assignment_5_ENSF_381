@@ -1,4 +1,3 @@
-// SignupForm.js
 import React, { useState } from 'react';
 import axios from 'axios';
 
@@ -33,10 +32,8 @@ const SignupForm = ({ switchToLogin }) => {
   
     setFormMes('');
     try {
-      const response = await axios.post('http://localhost:5000/SignupForm', formData);
+      const response = await axios.post('/SignupForm', formData); 
       console.log('Response:', response); 
-      const responseData = response.data || {}; 
-      console.log('Response data:', responseData); 
       setFormMes('User signed up successfully!');
       setFormData({
         username: '',
@@ -46,7 +43,11 @@ const SignupForm = ({ switchToLogin }) => {
       });
     } catch (error) {
       console.error('Signup error:', error.response.data); 
-      setFormMes('Username already taken');
+      if (error.response && error.response.status === 401) { // Adjusted status code
+        setFormMes('Username already taken');
+      } else {
+        setFormMes('Error signing up. Please try again later.');
+      }
     }
   }
 
