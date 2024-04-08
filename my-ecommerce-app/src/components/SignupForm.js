@@ -34,9 +34,9 @@ const SignupForm = ({ switchToLogin }) => {
     setFormMes('');
     try {
       const response = await axios.post('http://localhost:5000/SignupForm', formData);
-      console.log('Response:', response); // Log the entire response object
-      const responseData = response.data || {}; // Ensure responseData is an object
-      console.log('Response data:', responseData); // Log the data property or an empty object
+      console.log('Response:', response); 
+      const responseData = response.data || {}; 
+      console.log('Response data:', responseData); 
       setFormMes('User signed up successfully!');
       setFormData({
         username: '',

@@ -31,11 +31,10 @@ const LoginForm = ({ switchToSignup, setIsAuthenticated}) => {
       navigate('/products')
       } catch (error) {
         if (error.response && error.response.data) {
-          console.error('Login error:', error.response.data); // Log error response data
-          setFormError('Incorrect username or password'); // Set form error message
-        } else {
-          console.error('Login error:', error.message); // Log error message
-          setFormError('An error occurred while logging in'); // Set generic error message
+          console.error('Login error:', error.response.data); 
+          setFormError('Incorrect username or password'); 
+          console.error('Login error:', error.message); 
+          setFormError('An error occurred while logging in'); 
         }
       
         localStorage.removeItem("isLoggedIn");

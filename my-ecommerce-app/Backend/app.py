@@ -10,7 +10,6 @@ users = []
 def get_users():
     return jsonify(users)
 
-# User Reg API endpoint
 @app.route('/SignupForm', methods=['POST'])
 def register_user():
     data = request.json
@@ -24,7 +23,6 @@ def register_user():
     users.append({'username': username, 'password': password, 'email': email})
     return jsonify({'message': 'User registered successfully'}), 201
 
-# User Auth API endpoint
 @app.route('/Login', methods=['POST'])
 def login_user():
     data = request.json
