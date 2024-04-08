@@ -1,27 +1,29 @@
 import React from 'react';
+import '../App.css';
 import { Link } from 'react-router-dom';
 
+const imagePath = '/images/logo.png';
 
+function Header() {
+    return (
+        <div className="App-header">
+            <div className="header-content">
+                <img src={imagePath} className="App-logo" alt="logo" />
+                <div className="company-name">
+                    <p className="header-txt">
+                        Company Name
+                    </p>
+                </div>
+            </div>
 
-const Header = () => {
-  return (
-    <header>
-        <div classname = "logo-name" style ={{display :'flex', justifyContent: 'space-between', padding:10}} >
-            <div className="logo">
-                <img src="/images/logo.png" alt="Logo" style ={{width:50}}/>
-            </div>
-            <div class="company-name">
-                Company Name
-            </div>
+            <section className="navigation">
+                <Link to="/">Home</Link>
+                <Link to="/products">Products</Link>
+                <Link to="/login">Login</Link>
+            </section>
         </div>
-      
-        <div className="navigation" style ={{display :'flex', justifyContent: 'space-between', padding:10}}>
-         <Link to="/">Home</Link>
-         <Link to="/products">Products</Link>
-         <Link to="/login">Login</Link>
-         </div>
-    </header>
-  );
-};
+    );
+}
 
 export default Header;
+

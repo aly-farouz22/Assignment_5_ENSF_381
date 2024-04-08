@@ -1,20 +1,44 @@
 import React, { useState, useEffect } from 'react';
-import Product from './Product';
+import axios from 'axios';
+import ProductItem from './ProductItem';
+import ProductPage from './ProductPage';
 
-const ProductList = ({ onAddToCart }) => {
+const ProductList = ({ addToCart }) => {
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://localhost:3000/products') 
-      .then(response => response.json())
-      .then(data => setProducts(data))
-      .catch(error => console.error('Error fetching products:', error));
-  }, []); 
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/products');
+        setProducts(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  const toggleDetails = (productId) => {
+    const updatedProducts = products.map(product => {
+      if (product.id === productId) {
+        return { ...product, showDetails: !product.showDetails };
+      }
+      return product;
+    });
+    setProducts(updatedProducts);
+  };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
-    <div className="product-list">
+    <div>
       {products.map(product => (
-        <Product key={product.id} product={product} onAddToCart={onAddToCart} />
+        <ProductItem key={product.id} product={product} addToCart={addToCart} toggleDetails={toggleDetails}/>
       ))}
     </div>
   );

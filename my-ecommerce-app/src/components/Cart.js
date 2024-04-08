@@ -1,22 +1,27 @@
-// Cart.js
 import React from 'react';
 import CartItem from './CartItem';
+import './product.css';
 
+const calculateTotal = (cart) => {
+  let total = 0;
+  cart.forEach(item => {
+    total += item.price * item.quantity;
+  });
+  return total;
+};
 
-const Cart = ({ cartItems, onRemove }) => {
-  const getTotalPrice = () => {
-    return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
-  };
-
+const Cart = ({ cart, removeFromCart }) => {
   return (
     <div className="cart">
       <h2>Shopping Cart</h2>
-      {cartItems.map((item) => (
-        <CartItem key={item.id} product={item} onRemove={onRemove} />
+      {cart.map((item, index) => (
+        <CartItem key={index} item={item} removeFromCart={removeFromCart} />
       ))}
-      <div className="total">Total (in cart): ${getTotalPrice().toFixed(2)}</div>
+      <p>Total (in cart): ${calculateTotal(cart)}</p>
     </div>
   );
 };
+
+
 
 export default Cart;

@@ -3,66 +3,57 @@ import Header from './Header';
 import ProductList from './ProductList';
 import Cart from './Cart';
 import Footer from './Footer';
-import { Link } from 'react-router-dom';
+import './product.css';
 
-const Productpage = () => {
-  const [cartItems, setCartItems] = useState([]);
-  const [products, setProducts] = useState([]); 
+const ProductPage = () => {
+  const [cart, setCart] = useState(() =>{
+    const savedCart =JSON.parse(localStorage.getItem('cart'));
+    return Array.isArray(savedCart) ? savedCart : [];
+  });
 
-  useEffect(() => {
-    const storedCartItems = localStorage.getItem('cartItems');
-    if (storedCartItems) {
-      setCartItems(JSON.parse(storedCartItems));
-    }
-  }, []);
+  const [hoveredProduct, setHoveredProduct] = useState(null);
 
   useEffect(() => {
-    localStorage.setItem('cartItems', JSON.stringify(cartItems));
-  }, [cartItems]);
-
-  useEffect(() => {
-    fetch('http://localhost:3000/products') 
-      .then(response => response.json())
-      .then(data => setProducts(data))
-      .catch(error => console.error('Failed to fetch products:', error));
-  }, []); 
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }, [cart]);
 
   const addToCart = (product) => {
-    const existingItem = cartItems.find(item => item.id === product.id);
+    const existingItem = cart.find(item => item.name === product.name);
     if (existingItem) {
-      setCartItems(cartItems.map(item => item.id === product.id ? {...item, quantity: item.quantity + 1} : item));
+      const updatedCart = cart.map(item =>
+        item.name === product.name ? { ...item, quantity: item.quantity + 1 } : item
+      );
+      setCart(updatedCart);
     } else {
-      setCartItems([...cartItems, {...product, quantity: 1}]);
+      setCart([...cart, { ...product, quantity: 1 }]);
     }
   };
 
-  const removeFromCart = (productId) => {
-    setCartItems(cartItems.reduce((result, item) => {
-      if (item.id === productId) {
-        if (item.quantity > 1) {
-          result.push({...item, quantity: item.quantity - 1});
-        }
-      } else {
-        result.push(item);
-      }
-      return result;
-    }, []));
+  const removeFromCart = (product) => {
+    const updatedCart = cart.map(item =>
+      item.name === product.name ? { ...item, quantity: item.quantity - 1 } : item
+    ).filter(item => item.quantity > 0);
+    setCart(updatedCart);
   };
 
   return (
-    <div>
-      <Header />
+    <div className="product-page"> 
+      <Header /> 
       <table>
-        <tbody>
           <tr>
-            <td><ProductList products={products} onAddToCart={addToCart} /></td>
-            <td style={{ verticalAlign: 'top' }}><Cart cartItems={cartItems} onRemove={removeFromCart} /></td>
+            <td>
+              <ProductList 
+                addToCart={addToCart} 
+                setHoveredProduct={setHoveredProduct}
+                hoveredProduct={hoveredProduct}
+              />
+            </td>
+            <td style={{ verticalAlign: 'top' }}><Cart cart={cart} removeFromCart={removeFromCart} /></td>
           </tr>
-        </tbody>
-      </table>
+      </table>  
       <Footer />
     </div>
   );
 };
 
-export default Productpage;
+export default ProductPage;

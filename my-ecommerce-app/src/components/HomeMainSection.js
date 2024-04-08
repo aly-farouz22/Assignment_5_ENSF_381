@@ -1,38 +1,66 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import '../App.css';
+import { useNavigate } from 'react-router-dom';
+import {useState, useEffect} from 'react';
+import reviewsData from '../data/review';
 
-const HomeMainSection = ({ reviews }) => {
-  const renderStars = (rating) => {
-    const stars = [];
-    for (let i = 0; i < rating; i++) {
-      stars.push(<span key={i}>&#9733;</span>); // Unicode for star character
+function HomeMainSection() {
+    const navigate = useNavigate();
+    const [reviews, setReviews] = useState([]);
+
+    useEffect(() =>{
+        const selectRandomReviews = () => {
+            const copyArray = [...reviewsData]; 
+            const randomIndex1 = Math.floor(Math.random() * copyArray.length);
+            const randomElement1 = copyArray[randomIndex1]; 
+            copyArray.splice(randomIndex1, 1); 
+            const randomIndex2 = Math.floor(Math.random() * copyArray.length);
+            const randomElement2 = copyArray[randomIndex2]; 
+            const selectedReviews = [randomElement1, randomElement2];
+            setReviews(selectedReviews);
+        };
+        selectRandomReviews();
+    }, []);
+
+    function handleShopNow(){
+        navigate("/products");
     }
-    return stars;
-  };
 
-  return (
-    <main>
-      <section class="Home-Main-Section" style={{padding:10}}>
-        <h2>About Us</h2>
-        <p>Welcome to our online store! We are passionate about providing high-quality products and exceptional customer service. Learn more about our story and commitment to your satisfaction.</p>
-        <Link to="/products">
-          <button>Shop Now</button>
-        </Link>
-      </section>
-      <section class="Review" style={{padding:10}}>
-        <h2>Customer Reviews</h2>
-        {reviews.map((review, index) => (
-          <div key={index}>
-            <p>{review.customerName}</p>
-            <p>{review.reviewContent}</p>
-            <p>
-              Rating: {renderStars(review.stars)}
+    let reviewContent = null;
+
+    if (reviews.length > 0) {
+        reviewContent = (
+            <>
+                <p>{reviews[0].customerName}</p>
+                <p>{reviews[0].reviewContent}</p>
+                <p>Rating: {Array(reviews[0].stars).fill('\u2605').join('')}</p>
+
+                <p>{reviews[1].customerName}</p>
+                <p>{reviews[1].reviewContent}</p>
+                <p>Rating: {Array(reviews[1].stars).fill('\u2605').join('')}</p>
+            </>
+        );
+    }
+
+    return (
+        <div className="home-main-section">
+
+        <section className='About-us'>
+            <h2>About Us</h2>
+            <p>Welcome to out online store! We are passionate about provided high-quality products 
+                and exceptional customer service. Learn more about our story and commitment to your 
+                satisfaction
             </p>
-          </div>
-        ))}
-      </section>
-    </main>
-  );
-};
+            <button onClick={handleShopNow}>Shop Now!</button>
+        </section>
+
+        <h2> Customer Reviews </h2>
+        
+        {reviewContent}
+
+        </div>
+    );
+}
 
 export default HomeMainSection;
+

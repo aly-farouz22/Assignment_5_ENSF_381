@@ -1,22 +1,23 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; // Import BrowserRouter as Router and Routes
+// my App.js
+import React, { useState } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Homepage from './components/Homepage';
-import Productpage from './components/Productpage';
-import LoginPage from './components/LoginPage';
-
-
+import Productpage from './components/ProductPage';
+import Loginpage from './components/Login';
 
 const App = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
   return (
-    <Router>
+    <BrowserRouter>
       <div>
         <Routes>
           <Route path="/" element={<Homepage />} />
-          <Route path="/products" element={<Productpage />} />
-          <Route path="/login" element={<LoginPage />} />   
+          <Route path="/products" element={isAuthenticated ? <Productpage /> : <Navigate to="/login" replace />} />
+          <Route path="/login" element={<Loginpage setIsAuthenticated={setIsAuthenticated} />} />
         </Routes>
       </div>
-    </Router>
+    </BrowserRouter>
   );
 };
 
