@@ -1,4 +1,4 @@
-// my App.js
+// App.js
 import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Homepage from './components/Homepage';

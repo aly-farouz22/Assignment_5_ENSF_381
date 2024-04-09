@@ -33,6 +33,7 @@ const LoginForm = ({ switchToSignup, setIsAuthenticated}) => {
         if (error.response && error.response.data) {
           console.error('Login error:', error.response.data); 
           setFormError('Incorrect username or password'); 
+        } else {
           console.error('Login error:', error.message); 
           setFormError('An error occurred while logging in'); 
         }

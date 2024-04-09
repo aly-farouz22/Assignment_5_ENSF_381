@@ -49,7 +49,7 @@ function HomeMainSection() {
             <h2>About Us</h2>
             <p>Welcome to out online store! We are passionate about provided high-quality products 
                 and exceptional customer service. Learn more about our story and commitment to your 
-                satisfaction
+                satisfaction. Fast Shipping!
             </p>
             <button onClick={handleShopNow}>Shop Now!</button>
         </section>

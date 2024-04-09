@@ -5,7 +5,7 @@ function Footer() {
     return (
         <footer>
             <br></br>
-            <p class="footer-sect">&copy;Copyright: Aly Farouz and Saif Youssef</p>
+            <p class="footer-sect">&copy;Copyright: Aly Farouz and Saif Youssef </p>
         </footer>
     );
 }
